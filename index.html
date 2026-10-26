@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>支一郎 (Zhiyilang) · RPA → AI Agent Engineer</title>
+<style>
+  :root{
+    --bg:#0f1115; --card:#181b22; --fg:#e8eaed; --muted:#9aa3af;
+    --accent:#4f9dff; --accent2:#34d399; --border:#262b34;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+       background:var(--bg);color:var(--fg);line-height:1.6}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+  header{padding:64px 0 40px;text-align:center;
+         background:linear-gradient(160deg,#15233b 0%,#0f1115 70%)}
+  header h1{font-size:2.4rem;letter-spacing:1px}
+  header .role{color:var(--accent);font-size:1.1rem;margin-top:8px}
+  header .tag{display:inline-block;margin-top:14px;padding:6px 14px;border:1px solid var(--border);
+             border-radius:999px;color:var(--muted);font-size:.85rem}
+  section{padding:40px 0;border-bottom:1px solid var(--border)}
+  h2{font-size:1.4rem;margin-bottom:18px;color:var(--accent2)}
+  p{color:var(--muted);margin-bottom:12px}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .card h3{font-size:1.1rem;margin-bottom:8px}
+  .card .desc{font-size:.9rem;color:var(--muted)}
+  .card .meta{margin-top:12px;font-size:.8rem;color:var(--accent)}
+  .skills{display:flex;flex-wrap:wrap;gap:10px}
+  .skill{background:var(--card);border:1px solid var(--border);border-radius:8px;
+         padding:8px 14px;font-size:.9rem}
+  .cta{text-align:center;padding:48px 0}
+  .btn{display:inline-block;margin:8px;padding:12px 24px;border-radius:10px;font-weight:600}
+  .btn.primary{background:var(--accent);color:#06121f}
+  .btn.ghost{border:1px solid var(--border);color:var(--fg)}
+  footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.85rem}
+  @media(max-width:640px){.cards{grid-template-columns:1fr}header h1{font-size:1.8rem}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>支一郎 · Zhiyilang</h1>
+    <div class="role">RPA 开发 → AI Agent 工程师</div>
+    <div class="tag">影刀 / UiBot RPA · LLM 应用 · Agent 工程</div>
+  </div>
+</header>
+
+<section class="wrap" id="about">
+  <h2>关于我</h2>
+  <p>一年经验的 RPA 开发，能独立带项目做 PM；现正从 RPA 转向 LLM 应用与 Agent 工程。
+     喜欢把重复劳动自动化，也喜欢把自动化能力封装成别人能直接用的工具。</p>
+  <p>下面是我在 GitHub 上开源、可复用、零依赖的成品——拿来即用，也欢迎拿去上架组件市场。</p>
+</section>
+
+<section class="wrap" id="projects">
+  <h2>开源作品</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>claude-code-toolkit</h3>
+      <div class="desc">给 AI 编码 Agent 用的零依赖工具集：CHANGELOG 生成器、Next.js+SQLite 的
+        CLAUDE.md 模板、防误删安全钩子、零依赖 PR 审查 Agent。</div>
+      <div class="meta"><a href="https://github.com/Zhiyilang/claude-code-toolkit" target="_blank" rel="noopener">查看仓库 →</a></div>
+    </div>
+    <div class="card">
+      <h3>python-automation-kit</h3>
+      <div class="desc">纯标准库的日常办公自动化：重复文件查找、正则批量改名、目录树导出、
+        多 CSV 合并。默认只读/预览，安全可审计。</div>
+      <div class="meta"><a href="https://github.com/Zhiyilang/python-automation-kit" target="_blank" rel="noopener">查看仓库 →</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="skills">
+  <h2>技能栈</h2>
+  <div class="skills">
+    <span class="skill">影刀 RPA</span>
+    <span class="skill">来也 UiBot</span>
+    <span class="skill">Python</span>
+    <span class="skill">LLM 应用开发</span>
+    <span class="skill">Agent / 工作流编排</span>
+    <span class="skill">Git / GitHub</span>
+    <span class="skill">Excel / CSV 自动化</span>
+    <span class="skill">Web 自动化</span>
+  </div>
+</section>
+
+<section class="cta wrap" id="contact">
+  <h2>合作 / 赞助</h2>
+  <p>有 RPA 或 AI 自动化需求，或想支持我继续做开源工具，欢迎联系。</p>
+  <div>
+    <a class="btn primary" href="https://github.com/sponsors/Zhiyilang" target="_blank" rel="noopener">☕ GitHub 赞助</a>
+    <a class="btn ghost" href="https://github.com/Zhiyilang" target="_blank" rel="noopener">GitHub 主页</a>
+  </div>
+</section>
+
+<footer>
+  © 2026 支一郎 (Zhiyilang) · 用 WorkBuddy 自动生成
+</footer>
+</body>
+</html>
