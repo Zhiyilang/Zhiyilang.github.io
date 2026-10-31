@@ -3,111 +3,185 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>支一郎 (Zhiyilang) · RPA → AI Agent Engineer</title>
+<title>支一郎 (Zhiyilang) · RPA → AI Agent Engineer · 接单/开源作品集</title>
+<meta name="description" content="支一郎 — RPA 开发转 AI Agent 工程师。Excel/CSV 数据自动化、Python 脚本、定制 RPA 工具接单；GitHub 零依赖开源工具。">
 <style>
   :root{
-    --bg:#0f1115; --card:#181b22; --fg:#e8eaed; --muted:#9aa3af;
-    --accent:#4f9dff; --accent2:#34d399; --border:#262b34;
+    --bg:#f7f8fa; --card:#ffffff; --fg:#1f2933; --muted:#5b6776;
+    --accent:#1f6feb; --accent2:#0f9d58; --warn:#d97706;
+    --border:#e3e8ef; --shadow:0 1px 3px rgba(16,24,40,.06),0 1px 2px rgba(16,24,40,.04);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
-       background:var(--bg);color:var(--fg);line-height:1.6}
+       background:var(--bg);color:var(--fg);line-height:1.65}
   a{color:var(--accent);text-decoration:none}
   a:hover{text-decoration:underline}
-  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
-  header{padding:64px 0 40px;text-align:center;
-         background:linear-gradient(160deg,#15233b 0%,#0f1115 70%)}
-  header h1{font-size:2.4rem;letter-spacing:1px}
-  header .role{color:var(--accent);font-size:1.1rem;margin-top:8px}
-  header .tag{display:inline-block;margin-top:14px;padding:6px 14px;border:1px solid var(--border);
-             border-radius:999px;color:var(--muted);font-size:.85rem}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+  header{padding:60px 0 36px;text-align:center;background:linear-gradient(160deg,#e8f0fe 0%,var(--bg) 70%)}
+  header h1{font-size:2.3rem;letter-spacing:1px}
+  header .role{color:var(--accent);font-size:1.15rem;margin-top:8px;font-weight:600}
+  header .tag{display:inline-block;margin-top:14px;padding:6px 16px;border:1px solid var(--border);
+             border-radius:999px;color:var(--muted);font-size:.85rem;background:#fff}
   section{padding:40px 0;border-bottom:1px solid var(--border)}
-  h2{font-size:1.4rem;margin-bottom:18px;color:var(--accent2)}
-  p{color:var(--muted);margin-bottom:12px}
+  h2{font-size:1.5rem;margin-bottom:6px}
+  h2 .en{color:var(--muted);font-size:.9rem;font-weight:400;margin-left:8px}
+  p.lead{color:var(--muted);margin:10px 0 22px}
   .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
-  .card h3{font-size:1.1rem;margin-bottom:8px}
-  .card .desc{font-size:.9rem;color:var(--muted)}
-  .card .meta{margin-top:12px;font-size:.8rem;color:var(--accent)}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow)}
+  .card h3{font-size:1.08rem;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .card .desc{font-size:.92rem;color:var(--muted)}
+  .card .meta{margin-top:12px;font-size:.82rem}
+  .badge{display:inline-block;background:#e8f0fe;color:var(--accent);border-radius:6px;padding:2px 8px;font-size:.75rem;font-weight:600}
   .skills{display:flex;flex-wrap:wrap;gap:10px}
-  .skill{background:var(--card);border:1px solid var(--border);border-radius:8px;
-         padding:8px 14px;font-size:.9rem}
-  .cta{text-align:center;padding:48px 0}
-  .btn{display:inline-block;margin:8px;padding:12px 24px;border-radius:10px;font-weight:600}
-  .btn.primary{background:var(--accent);color:#06121f}
-  .btn.ghost{border:1px solid var(--border);color:var(--fg)}
-  footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.85rem}
-  @media(max-width:640px){.cards{grid-template-columns:1fr}header h1{font-size:1.8rem}}
+  .skill{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:.9rem;box-shadow:var(--shadow)}
+  .svc{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  .svc .card h3{font-size:1rem}
+  .cta{text-align:center;padding:44px 0}
+  .btn{display:inline-block;margin:8px;padding:13px 26px;border-radius:10px;font-weight:600;font-size:1rem}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.green{background:var(--accent2);color:#fff}
+  .btn.ghost{border:1px solid var(--border);color:var(--fg);background:#fff}
+  .btn.warn{background:var(--warn);color:#fff}
+  .proof{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:22px;font-family:"SFMono-Regular",Consolas,monospace;font-size:.86rem;overflow-x:auto}
+  .proof .g{color:#34d399}.proof .b{color:#60a5fa}.proof .y{color:#fbbf24}
+  footer{padding:30px 0;text-align:center;color:var(--muted);font-size:.85rem}
+  .note{font-size:.85rem;color:var(--muted);margin-top:10px}
+  @media(max-width:760px){.cards,.svc{grid-template-columns:1fr}header h1{font-size:1.8rem}}
 </style>
 </head>
 <body>
 <header>
   <div class="wrap">
     <h1>支一郎 · Zhiyilang</h1>
-    <div class="role">RPA 开发 → AI Agent 工程师</div>
-    <div class="tag">影刀 / UiBot RPA · LLM 应用 · Agent 工程</div>
+    <div class="role">RPA 开发 → AI Agent 工程师 · 数据自动化接单</div>
+    <div class="tag">影刀 / UiBot RPA · LLM 应用 · Agent 工程 · Excel/CSV 自动化</div>
   </div>
 </header>
 
-<section class="wrap" id="about">
-  <h2>关于我</h2>
-  <p>一年经验的 RPA 开发，能独立带项目做 PM；现正从 RPA 转向 LLM 应用与 Agent 工程。
-     喜欢把重复劳动自动化，也喜欢把自动化能力封装成别人能直接用的工具。</p>
-  <p>下面是我在 GitHub 上开源、可复用、零依赖的成品——拿来即用，也欢迎拿去上架组件市场。</p>
+<section class="wrap" id="services">
+  <h2>接单服务 <span class="en">What I can do for you</span></h2>
+  <p class="lead">把重复劳动交给脚本。下面每项都已封装成可复用工具，交付快、价格透明。中文沟通、支付宝/微信收款。</p>
+  <div class="svc">
+    <div class="card"><h3>📊 Excel 合并</h3><div class="desc">多表/多文件按主键合并去重，支持乱序列、脏数据。</div><div class="meta"><span class="badge">零依赖</span> <span class="badge">可复现</span></div></div>
+    <div class="card"><h3>🧹 数据清洗</h3><div class="desc">去重、规范化（含 ¥1,200.00 这类带符千分位）、统一格式。</div><div class="meta"><span class="badge">真实验证</span></div></div>
+    <div class="card"><h3>🔍 双表对账</h3><div class="desc">两表按主键核对，输出「仅A / 仅B / 数值不一致」三类结果。</div><div class="meta"><span class="badge">3 文件输出</span></div></div>
+    <div class="card"><h3>📈 透视 / 拆分</h3><div class="desc">按维度汇总成透视表，或按列拆分成多个文件。</div><div class="meta"><span class="badge">sum/avg/count</span></div></div>
+    <div class="card"><h3>🐍 Python 自动化</h3><div class="desc">文件批处理、爬取、报表生成、定时任务——标准库零依赖。</div><div class="meta"><span class="badge">可审计</span></div></div>
+    <div class="card"><h3>🤖 定制 RPA 工具</h3><div class="desc">影刀/UiBot 命令库、可上架组件市场的成品工具。</div><div class="meta"><span class="badge">被动收入</span></div></div>
+  </div>
+  <p class="note">👉 在 <b>闲鱼</b> 或 <b>Fiverr</b> 搜索 ID <b>Zhiyilang</b> 看在售服务；或直接邮箱联系（首检免费）。</p>
+</section>
+
+<section class="wrap" id="proof">
+  <h2>真实能力证明 <span class="en">Verified, not promised</span></h2>
+  <p class="lead">下面是已开源、可运行、零依赖的真实工具，拿来即用。</p>
+  <div class="proof">
+<span class="y">$</span> python deliver.py recon 表A.csv 表B.csv --key 订单号
+<span class="g">✓ 生成 3 个结果文件：</span> 1_仅在表A.csv · 2_仅在表B.csv · 3_数值不一致.csv
+
+<span class="y">$</span> python deliver.py clean 脏数据.csv
+<span class="g">✓ 自动规范化</span> <span class="b">"¥1,200.00"</span> → 1200.0 ，去重后输出
+
+<span class="y">$</span> 已处理的真实场景
+  · 多门店销售明细合并（上海/杭州/北京）
+  · 财务双系统对账（A 系统 vs B 系统）
+  · 带千分位/货币符的导出表清洗
+  <span class="g">→ 全部 Python 标准库，无第三方依赖，结果可逐字节复现</span>
+  </div>
+  <p class="note">工具仓库：<a href="https://github.com/Zhiyilang/excel-deliver-kit" target="_blank" rel="noopener">github.com/Zhiyilang/excel-deliver-kit</a></p>
 </section>
 
 <section class="wrap" id="projects">
-  <h2>开源作品</h2>
+  <h2>开源作品 <span class="en">Open-source toolkit</span></h2>
   <div class="cards">
     <div class="card">
+      <h3>excel-deliver-kit</h3>
+      <div class="desc">零依赖 Excel/CSV 处理工具集：合并、清洗、对账、透视、拆分。接单底层引擎。</div>
+      <div class="meta"><a href="https://github.com/Zhiyilang/excel-deliver-kit" target="_blank" rel="noopener">查看仓库 →</a></div>
+    </div>
+    <div class="card">
+      <h3>rpa-to-ai-kit</h3>
+      <div class="desc">零依赖工具箱，把影刀/UiBot RPA 流程桥接到现代 AI Agent 能力。</div>
+      <div class="meta"><a href="https://github.com/Zhiyilang/rpa-to-ai-kit" target="_blank" rel="noopener">查看仓库 →</a></div>
+    </div>
+    <div class="card">
+      <h3>quorumpilot</h3>
+      <div class="desc">四智能体交易前评审仲裁框架（AI Agent 工程代表作）。</div>
+      <div class="meta"><a href="https://github.com/Zhiyilang/quorumpilot" target="_blank" rel="noopener">查看仓库 →</a></div>
+    </div>
+    <div class="card">
+      <h3>paypilot</h3>
+      <div class="desc">带策略护栏的 AI 购物 Agent，零依赖 MCP 架构。</div>
+      <div class="meta"><a href="https://github.com/Zhiyilang/paypilot" target="_blank" rel="noopener">查看仓库 →</a></div>
+    </div>
+    <div class="card">
+      <h3>receiptbox</h3>
+      <div class="desc">付款前 AI 审票 MCP Server，自托管、可审计。</div>
+      <div class="meta"><a href="https://github.com/Zhiyilang/receiptbox" target="_blank" rel="noopener">查看仓库 →</a></div>
+    </div>
+    <div class="card">
       <h3>claude-code-toolkit</h3>
-      <div class="desc">给 AI 编码 Agent 用的零依赖工具集：CHANGELOG 生成器、Next.js+SQLite 的
-        CLAUDE.md 模板、防误删安全钩子、零依赖 PR 审查 Agent。</div>
+      <div class="desc">零依赖 Claude Code 工具：CHANGELOG 生成、安全钩子、PR 审查。</div>
       <div class="meta"><a href="https://github.com/Zhiyilang/claude-code-toolkit" target="_blank" rel="noopener">查看仓库 →</a></div>
     </div>
+  </div>
+</section>
+
+<section class="wrap" id="compete">
+  <h2>竞赛 / 项目作品 <span class="en">Competition builds</span></h2>
+  <div class="cards">
     <div class="card">
-      <h3>python-automation-kit</h3>
-      <div class="desc">纯标准库的日常办公自动化：重复文件查找、正则批量改名、目录树导出、
-        多 CSV 合并。默认只读/预览，安全可审计。</div>
-      <div class="meta">
-        <a href="https://github.com/Zhiyilang/python-automation-kit" target="_blank" rel="noopener">查看仓库 →</a>
-        · CI 已验证可用
-      </div>
+      <h3>🛡 红山·软件快响（¥45万）</h3>
+      <div class="desc">多人协同应急处突模拟与评价软件：零依赖 Python 引擎 + 二维/等距三维态势 + 回放自动评分。方案与可运行原型已就绪。</div>
+      <div class="meta"><a href="https://github.com/Zhiyilang" target="_blank" rel="noopener">提交包已备 →</a></div>
     </div>
     <div class="card">
-      <h3>uibot-store-kits</h3>
-      <div class="desc">给 UiBot Creator 用的命令库源码：Excel 删空行/去重/合并/按列拆分，
-        文件去重/批量改名/目录树导出。纯自带命令零依赖，可一键上架 UB Store 赚被动收入。</div>
-      <div class="meta"><a href="https://github.com/Zhiyilang/uibot-store-kits" target="_blank" rel="noopener">查看仓库 →</a></div>
+      <h3>🤝 swarmbox / swarm alignment</h3>
+      <div class="desc">多智能体对齐评测框架，零依赖、断言全绿。</div>
+      <div class="meta"><a href="https://github.com/Zhiyilang/swarmbox" target="_blank" rel="noopener">查看仓库 →</a></div>
+    </div>
+    <div class="card">
+      <h3>🧾 docpilot</h3>
+      <div class="desc">AI 发票审计 + 一键收款，面向小微企业的付费工具。</div>
+      <div class="meta"><a href="https://github.com/Zhiyilang/docpilot" target="_blank" rel="noopener">查看仓库 →</a></div>
+    </div>
+    <div class="card">
+      <h3>⚡ patchpilot</h3>
+      <div class="desc">运行在真实 CI 上的 Agentic 代码审查与自动修复。</div>
+      <div class="meta"><a href="https://github.com/Zhiyilang/patchpilot" target="_blank" rel="noopener">查看仓库 →</a></div>
     </div>
   </div>
 </section>
 
 <section class="wrap" id="skills">
-  <h2>技能栈</h2>
+  <h2>技能栈 <span class="en">Stack</span></h2>
   <div class="skills">
     <span class="skill">影刀 RPA</span>
     <span class="skill">来也 UiBot</span>
-    <span class="skill">Python</span>
+    <span class="skill">Python (std)</span>
     <span class="skill">LLM 应用开发</span>
     <span class="skill">Agent / 工作流编排</span>
-    <span class="skill">Git / GitHub</span>
+    <span class="skill">MCP 协议</span>
     <span class="skill">Excel / CSV 自动化</span>
     <span class="skill">Web 自动化</span>
+    <span class="skill">Git / GitHub</span>
   </div>
 </section>
 
 <section class="cta wrap" id="contact">
-  <h2>合作 / 赞助</h2>
-  <p>有 RPA 或 AI 自动化需求，或想支持我继续做开源工具，欢迎联系。</p>
+  <h2>合作 / 接单 / 赞助</h2>
+  <p>有 RPA、Excel 自动化或 AI 工具需求，欢迎联系。中文沟通，支付宝/微信收款，<b>首检免费</b>。</p>
   <div>
-    <a class="btn primary" href="https://github.com/sponsors/Zhiyilang" target="_blank" rel="noopener">☕ GitHub 赞助</a>
-    <a class="btn ghost" href="https://github.com/Zhiyilang" target="_blank" rel="noopener">GitHub 主页</a>
+    <a class="btn primary" href="mailto:2383844705@qq.com">✉️ 邮箱联系</a>
+    <a class="btn green" href="https://github.com/Zhiyilang" target="_blank" rel="noopener">GitHub 主页</a>
+    <a class="btn warn" href="https://github.com/Zhiyilang/excel-deliver-kit" target="_blank" rel="noopener">看接单工具</a>
+    <a class="btn ghost" href="https://github.com/Zhiyilang?tab=repositories" target="_blank" rel="noopener">全部仓库</a>
   </div>
+  <p class="note">闲鱼 / Fiverr 店铺：搜索 ID <b>Zhiyilang</b> 即可找到在售服务（上架后即可直达）。</p>
 </section>
 
 <footer>
-  © 2026 支一郎 (Zhiyilang) · 用 WorkBuddy 自动生成
+  © 2026 支一郎 (Zhiyilang) · 数据自动化 · AI Agent 工程 · 用 WorkBuddy 自动生成
 </footer>
 </body>
 </html>
