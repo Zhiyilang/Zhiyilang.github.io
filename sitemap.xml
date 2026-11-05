@@ -4,4 +4,6 @@
   <url><loc>https://zhiyilang.github.io/excel-deliver-kit/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://zhiyilang.github.io/#order</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://zhiyilang.github.io/blog/excel-recon.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://zhiyilang.github.io/blog/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://zhiyilang.github.io/blog/payroll.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
