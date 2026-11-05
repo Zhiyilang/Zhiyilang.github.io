@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>工资核算 Python 脚本：税前工资、五险一金与个税累计预扣怎么算 | 支一郎</title>
+<meta name="description" content="用零依赖 Python 算工资：税前应发、五险一金个人部分、个税累计预扣法、实发工资。附可下载 payroll-kit 与代做入口，替代易错的 Excel 公式。">
+<meta name="keywords" content="工资核算,个税累计预扣,五险一金计算,实发工资,Python算工资,发薪条,薪酬计算脚本,零依赖">
+<meta property="og:title" content="工资核算 Python 脚本：税前、五险一金与个税累计预扣怎么算">
+<meta property="og:description" content="用零依赖 Python 算工资：税前应发、五险一金、个税累计预扣、实发。附 payroll-kit 与代做。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://zhiyilang.github.io/blog/payroll.html">
+<link rel="canonical" href="https://zhiyilang.github.io/blog/payroll.html">
+<style>
+  :root{--bg:#fff;--fg:#1a1a2e;--muted:#5b6472;--accent:#2563eb;--card:#f7f9fc;--border:#e4e9f2}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--fg);line-height:1.8;max-width:760px;margin:0 auto;padding:32px 20px 64px}
+  h1{font-size:1.9rem;line-height:1.35;margin-bottom:12px}
+  .meta{color:var(--muted);font-size:.9rem;margin-bottom:28px}
+  h2{font-size:1.3rem;margin:36px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--border)}
+  p{margin:14px 0}
+  code{background:#eef2f9;color:#0f172a;padding:2px 6px;border-radius:5px;font-size:.86em;font-family:ui-monospace,Consolas,monospace}
+  pre{background:#0f172a;color:#e2e8f0;padding:16px;border-radius:10px;overflow:auto;font-size:.84rem;line-height:1.6;margin:14px 0}
+  ul{margin:12px 0 12px 22px}li{margin:6px 0}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin:24px 0}
+  .btn{display:inline-block;background:var(--accent);color:#fff;font-weight:600;padding:11px 20px;border-radius:9px;text-decoration:none;margin:6px 6px 0 0}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+  a{color:var(--accent)}
+  .back{display:inline-block;margin-bottom:20px;color:var(--muted);text-decoration:none;font-size:.9rem}
+</style>
+</head>
+<body>
+<a class="back" href="https://zhiyilang.github.io/blog/">← 笔记目录</a>
+<h1>工资核算 Python 脚本：税前、五险一金与个税累计预扣怎么算</h1>
+<div class="meta">支一郎 · RPA 开发转 AI Agent 工程实战笔记 · 2026-11-05</div>
+
+<p>小团队 HR / 财务每个月算工资，最怕两件事：<strong>五险一金基数口径乱</strong>、<strong>个税累计预扣法算错</strong>。Excel 公式一改牵一发动全身。本文给一套<strong>零依赖 Python 工资核算脚本</strong>思路，附可下载工具与代做入口。</p>
+
+<h2>一、工资的四个层次</h2>
+<ul>
+  <li><strong>税前应发</strong> = 基本工资 + 绩效 + 补贴 − 事假扣款</li>
+  <li><strong>五险一金（个人）</strong> = 缴费基数 × 比例（养老 8% / 医疗 2% / 失业 0.5% / 公积金 5%–12%，各地不同）</li>
+  <li><strong>应纳税所得额</strong> = 累计收入 − 累计免赔（5000×月数）− 累计五险一金 − 累计专项附加扣除</li>
+  <li><strong>个税（累计预扣）</strong> = 应纳税所得额 × 税率 − 速算扣除数 − 已预缴；<strong>实发 = 税前应发 − 五险一金 − 个税</strong></li>
+</ul>
+
+<h2>二、个税累计预扣核心代码</h2>
+<pre>def cum_pit(taxable, prev_tax=0.0, prev_paid=0.0):
+    # 税率表（累计预扣）：不超过36000 → 3%
+    brackets = [(36000,0.03,0),(144000,0.10,2520),
+                (300000,0.20,16920),(420000,0.25,31920),
+                (660000,0.30,52920),(960000,0.35,85920),
+                (1e12,0.45,181920)]
+    cum = taxable + prev_tax
+    rate,k,ded = next((r,k,d) for lim,r,k,d in brackets if cum &lt;= lim)
+    due = cum*rate - k - prev_paid        # 本月应补（可为负=不退）
+    return max(due, 0.0)
+</pre>
+<p>关键点：个税是<strong>累计</strong>计算，每月要用"累计值"减去"上月已缴"，不是单月独立算。这套逻辑我已封装进 <strong>payroll-kit</strong>，附 5/5 单元测试，覆盖五险一金与累计预扣。</p>
+
+<h2>三、要现成工具？</h2>
+<div class="card">
+  <h3>① 免费自取（MIT）</h3>
+  <p><strong>payroll-kit</strong>：中文工资与考勤核算，税前/五险一金/个税累计预扣/实发，命令行批量出每个人的发薪条。</p>
+  <a class="btn" href="https://github.com/Zhiyilang/payroll-kit" target="_blank" rel="noopener">payroll-kit 仓库</a>
+</div>
+<div class="card">
+  <h3>② 代做 / 定制</h3>
+  <p>把工资表（可脱敏）发我，我帮你批量核算并生成发薪条；或按你们公司私有规则（奖金分摊、请假折算）定制脚本。</p>
+  <p><strong>Excel 代做 ¥50 起 · 零依赖 Python 脚本定制 ¥200 起 · 企业定制 ¥1000 起</strong></p>
+  <a class="btn" href="https://zhiyilang.github.io/#order">查看接单报价与流程</a>
+</div>
+<p style="color:var(--muted);font-size:.85rem;margin-top:32px">更多 Excel / RPA / 工资核算 自动化工具，见 <a href="https://zhiyilang.github.io/">支一郎主页</a> 与 <a href="https://zhiyilang.github.io/blog/">笔记目录</a>。</p>
+</body>
+</html>
