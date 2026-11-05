@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Excel 两表对账怎么做？零依赖 Python 脚本替代手工 VLOOKUP | 支一郎</title>
+<meta name="description" content="财务/运营如何用零依赖 Python 脚本做 Excel 两表对账：按主键比对、输出仅A/仅B/不一致三文件，替代易错的 VLOOKUP 与人工核对。附可下载工具与代做入口。">
+<meta name="keywords" content="Excel对账,两表比对,Excel数据核对,VLOOKUP替代,财务对账,订单对账,Python对账脚本,零依赖">
+<meta property="og:title" content="Excel 两表对账怎么做？零依赖 Python 脚本替代手工 VLOOKUP">
+<meta property="og:description" content="财务/运营如何用零依赖 Python 脚本做 Excel 两表对账，替代易错的 VLOOKUP 与人工核对。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://zhiyilang.github.io/blog/excel-recon.html">
+<link rel="canonical" href="https://zhiyilang.github.io/blog/excel-recon.html">
+<style>
+  :root{--bg:#fff;--fg:#1a1a2e;--muted:#5b6472;--accent:#2563eb;--card:#f7f9fc;--border:#e4e9f2}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--fg);line-height:1.8;max-width:760px;margin:0 auto;padding:32px 20px 64px}
+  h1{font-size:1.9rem;line-height:1.35;margin-bottom:12px}
+  .meta{color:var(--muted);font-size:.9rem;margin-bottom:28px}
+  h2{font-size:1.3rem;margin:36px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--border)}
+  p{margin:14px 0;color:var(--fg)}
+  code{background:#eef2f9;color:#0f172a;padding:2px 6px;border-radius:5px;font-size:.86em;font-family:ui-monospace,Consolas,monospace}
+  pre{background:#0f172a;color:#e2e8f0;padding:16px;border-radius:10px;overflow:auto;font-size:.84rem;line-height:1.6;margin:14px 0}
+  ul{margin:12px 0 12px 22px}li{margin:6px 0}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin:24px 0}
+  .card h3{margin-bottom:8px}
+  .btn{display:inline-block;background:var(--accent);color:#fff;font-weight:600;padding:11px 20px;border-radius:9px;text-decoration:none;margin:6px 6px 0 0}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+  a{color:var(--accent)}
+  .back{display:inline-block;margin-bottom:20px;color:var(--muted);text-decoration:none;font-size:.9rem}
+</style>
+</head>
+<body>
+<a class="back" href="https://zhiyilang.github.io/">← 返回支一郎主页</a>
+<h1>Excel 两表对账怎么做？用零依赖 Python 脚本替代手工 VLOOKUP</h1>
+<div class="meta">支一郎 · RPA 开发转 AI Agent 工程实战笔记 · 2026-11-05</div>
+
+<p>财务月底对账、运营核对订单与回款，最常见的场景是<strong>两张 Excel 表按某个主键（订单号、工号、客户 ID）比对</strong>：哪些只在 A 表、哪些只在 B 表、哪些两边都有但金额/状态不一致。本文给你一条<strong>零依赖、可重复、可批量</strong>的做法，直接替代容易出错的 <code>VLOOKUP</code> 和纯人工核对。</p>
+
+<h2>一、手工 VLOOKUP 的三个坑</h2>
+<ul>
+  <li><strong>漏匹</strong>：<code>VLOOKUP</code> 默认近似匹配，忘了写 <code>FALSE</code> 就会乱匹配；主键有空格/全半角差异时静默失败。</li>
+  <li><strong>看不出"仅一边有"</strong>：要分别正反查两次才知道哪些是单边数据，容易漏。</li>
+  <li><strong>量一大就崩</strong>：几万行时卡顿、易粘错列，且每次都要重做。</li>
+</ul>
+
+<h2>二、零依赖 Python 对账脚本（核心逻辑）</h2>
+<p>只用 Python 标准库，不装 pandas，跨机器直接跑。思路：把两张表读成字典，主键做集合运算。</p>
+<pre>import csv
+
+def load(path, key):
+    d = {}
+    with open(path, encoding="utf-8-sig", newline="") as f:
+        for row in csv.DictReader(f):
+            d[row[key].strip()] = row
+    return d
+
+a = load("表A.csv", "订单号")
+b = load("表B.csv", "订单号")
+only_a = set(a) - set(b)          # 仅 A 有
+only_b = set(b) - set(a)          # 仅 B 有
+both   = set(a) & set(b)
+mismatch = [k for k in both if a[k]["金额"] != b[k]["金额"]]  # 金额不一致
+
+print("仅A:", len(only_a), "仅B:", len(only_b), "不一致:", len(mismatch))
+</pre>
+<p>把 <code>only_a / only_b / mismatch</code> 三份结果各写一个 CSV，就是财务要的"差异清单"。这套逻辑我已封装成<strong>零依赖命令行工具</strong>，支持多 Sheet、指定主键列、输出三文件，见下方工具。</p>
+
+<h2>三、想要现成工具？两条路</h2>
+<div class="card">
+  <h3>① 免费自取（MIT，可商用）</h3>
+  <p><strong>excel-deliver-kit</strong>：合并/清洗/拆分/对账/透视一体化命令行工具。<br>
+  <strong>uibot_excel_recon</strong>：Excel 自动对账引擎，UiBot 流程可直接调用，财务订单对账通用。</p>
+  <a class="btn" href="https://github.com/Zhiyilang/excel-deliver-kit" target="_blank" rel="noopener">excel-deliver-kit 仓库</a>
+  <a class="btn ghost" href="https://github.com/Zhiyilang/uibot_excel_recon" target="_blank" rel="noopener">uibot_excel_recon 仓库</a>
+</div>
+<div class="card">
+  <h3>② 不想自己跑？代做 / 定制</h3>
+  <p>把两张表（数据可脱敏）发我邮箱，我帮你跑出差异清单，或按你的私有规则（多 Sheet、跨库、数据库直连）定制脚本。</p>
+  <p><strong>Excel 代做 ¥50 起 · 零依赖 Python 脚本定制 ¥200 起 · 企业定制 ¥1000 起</strong></p>
+  <a class="btn" href="https://zhiyilang.github.io/#order">查看接单报价与流程</a>
+</div>
+
+<h2>四、小结</h2>
+<p>对账的本质是<strong>集合运算 + 差异输出</strong>。能用脚本固定下来的，就不要每次手工 VLOOKUP。需要批量、私有规则或代跑，走上面的接单入口即可，先报价后付款。</p>
+<p style="color:var(--muted);font-size:.85rem;margin-top:32px">更多 Excel / RPA / 工资核算 自动化工具与教程，见 <a href="https://zhiyilang.github.io/">支一郎主页</a>。</p>
+</body>
+</html>
