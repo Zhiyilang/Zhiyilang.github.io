@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>支一郎 · 实战笔记：Excel 自动化 / 工资核算 / RPA 转 AI</title>
+  <link>https://zhiyilang.github.io/blog/</link>
+  <description>零依赖 Python 工具、RPA 实战与 AI 转型笔记（内容均来自本站已发布文章）</description>
+  <language>zh-CN</language>
+  <lastBuildDate>Mon, 09 Nov 2026 04:17:51 GMT</lastBuildDate>
+  <item>
+    <title>把 RPA 流程一键编译成 MCP Server：rpa2mcp 设计与实战 | 支一郎技术博客</title>
+    <link>https://zhiyilang.github.io/blog/rpa2mcp.html</link>
+    <guid isPermaLink="true">https://zhiyilang.github.io/blog/rpa2mcp.html</guid>
+    <description>影刀/UiBot 的 RPA 脚本大模型看不见？用纯标准库把流程 JSON 编译成 MCP 工具，让 Agent 直接调用你的自动化能力，零重写。</description>
+  </item>
+  <item>
+    <title>零依赖 Python 实战：在 UiBot 里做一套 Excel 自动化组件 | 支一郎技术博客</title>
+    <link>https://zhiyilang.github.io/blog/uibot-excel.html</link>
+    <guid isPermaLink="true">https://zhiyilang.github.io/blog/uibot-excel.html</guid>
+    <description>不装 pandas、不装 openpyxl，纯标准库 30 行解析 xlsx，实现合并、透视、对账三件套，可直接在 UiBot 工程里调用。</description>
+  </item>
+  <item>
+    <title>没有浏览器怎么测 RPA 流程？rpa2test 的 Mock 干跑与「宣称=实测」闸门 | 支一郎技术博客</title>
+    <link>https://zhiyilang.github.io/blog/rpa2test.html</link>
+    <guid isPermaLink="true">https://zhiyilang.github.io/blog/rpa2test.html</guid>
+    <description>RPA 流程的逻辑被绑死在浏览器上，回归极贵。用 Mock 干跑 + 证据声明闸门，把断言卡进 CI，践行「宣称=实测」。</description>
+  </item>
+  <item>
+    <title>Excel 两表对账怎么做？零依赖 Python 脚本替代手工 VLOOKUP | 支一郎</title>
+    <link>https://zhiyilang.github.io/blog/excel-recon.html</link>
+    <guid isPermaLink="true">https://zhiyilang.github.io/blog/excel-recon.html</guid>
+    <description>财务/运营如何用零依赖 Python 脚本做 Excel 两表对账：按主键比对、输出仅A/仅B/不一致三文件，替代易错的 VLOOKUP 与人工核对。附可下载工具与代做入口。</description>
+  </item>
+  <item>
+    <title>工资核算 Python 脚本：税前工资、五险一金与个税累计预扣怎么算 | 支一郎</title>
+    <link>https://zhiyilang.github.io/blog/payroll.html</link>
+    <guid isPermaLink="true">https://zhiyilang.github.io/blog/payroll.html</guid>
+    <description>用零依赖 Python 算工资：税前应发、五险一金个人部分、个税累计预扣法、实发工资。附可下载 payroll-kit 与代做入口，替代易错的 Excel 公式。</description>
+  </item>
+</channel>
+</rss>
